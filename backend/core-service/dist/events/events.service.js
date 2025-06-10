@@ -26,6 +26,32 @@ let EventsService = class EventsService {
         const createdEvent = new this.eventModel(createEventDto);
         return createdEvent.save();
     }
+    async findAll() {
+        return this.eventModel.find().exec();
+    }
+    async findOne(id) {
+        const event = await this.eventModel.findById(id).exec();
+        if (!event) {
+            throw new common_1.NotFoundException(`Event with ID "${id}" not found`);
+        }
+        return event;
+    }
+    async update(id, updateEventDto) {
+        const existingEvent = await this.eventModel
+            .findByIdAndUpdate(id, updateEventDto, { new: true })
+            .exec();
+        if (!existingEvent) {
+            throw new common_1.NotFoundException(`Event with ID "${id}" not found`);
+        }
+        return existingEvent;
+    }
+    async remove(id) {
+        const deletedEvent = await this.eventModel.findByIdAndDelete(id).exec();
+        if (!deletedEvent) {
+            throw new common_1.NotFoundException(`Event with ID "${id}" not found`);
+        }
+        return deletedEvent;
+    }
 };
 exports.EventsService = EventsService;
 exports.EventsService = EventsService = __decorate([
