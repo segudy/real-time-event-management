@@ -1,15 +1,19 @@
 // backend/realtime-service/src/gateways/events.gateway.ts
+import { Injectable } from '@nestjs/common'; // Injectable hinzufügen
 import { WebSocketServer, WebSocket } from 'ws';
 
+@Injectable() // Gateway als injizierbarer Service markieren
 export class EventsGateway {
-  // Nimmt den WSS Server an
-  constructor(private wss: WebSocketServer) {
-    this.handleConnections();
-  }
+  private wss: WebSocketServer;
 
-  private handleConnections() {
+  // Der Konstruktor ist jetzt leer
+  constructor() {}
+
+  // Neue Methode, um den Server zu initialisieren
+  initialize(server: WebSocketServer) {
+    this.wss = server;
     this.wss.on('connection', (ws: WebSocket) => {
-      console.log('Client verbunden (im sauberen Gateway)!');
+      console.log('Client verbunden (FINALE VERSION)!');
       ws.send('Willkommen vom finalen, sauberen Gateway!');
 
       ws.on('message', (message) => {
@@ -18,14 +22,17 @@ export class EventsGateway {
     });
   }
 
-  // Logik für Nachrichten
   private handleMessage(client: WebSocket, message: any) {
     console.log(`Nachricht im Gateway erhalten: ${message.toString()}`);
     client.send(`Gateway-Echo: ${message.toString()}`);
   }
 
-  // Später: Methode um Nachrichten an alle zu senden
-  broadcast(message: string) {
+  public broadcast(message: string) {
+    if (!this.wss) {
+      console.error('WebSocket Server nicht initialisiert.');
+      return;
+    }
+    console.log(`Sende Broadcast-Nachricht: ${message}`);
     this.wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(message);
