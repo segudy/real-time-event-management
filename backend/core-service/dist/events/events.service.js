@@ -17,14 +17,26 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const event_schema_1 = require("./schemas/event.schema");
+const axios_1 = require("@nestjs/axios");
 let EventsService = class EventsService {
     eventModel;
-    constructor(eventModel) {
+    httpService;
+    realtimeServiceUrl = 'http://localhost:3002';
+    constructor(eventModel, httpService) {
         this.eventModel = eventModel;
+        this.httpService = httpService;
     }
     async create(createEventDto) {
         const createdEvent = new this.eventModel(createEventDto);
-        return createdEvent.save();
+        const savedEvent = await createdEvent.save();
+        this.httpService
+            .post(`${this.realtimeServiceUrl}/internal/events/new`, savedEvent)
+            .subscribe({
+            error: (err) => {
+                console.error('Fehler bei Benachrichtigung:', err.message);
+            },
+        });
+        return savedEvent;
     }
     async findAll() {
         return this.eventModel.find().exec();
@@ -57,6 +69,7 @@ exports.EventsService = EventsService;
 exports.EventsService = EventsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(event_schema_1.Event.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        axios_1.HttpService])
 ], EventsService);
 //# sourceMappingURL=events.service.js.map
