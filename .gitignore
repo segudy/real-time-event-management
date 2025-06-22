@@ -1,6 +1,10 @@
 /backend/core-service/node_modules/
 /backend/realtime-service/node_modules/
+/backend/analytics-collector-service/node_modules/
 
+/backend/core-service/dist/
+/backend/realtime-service/dist/
+/backend/analytics-collector-service/dist/
 # Compiled output
 /dist
 
