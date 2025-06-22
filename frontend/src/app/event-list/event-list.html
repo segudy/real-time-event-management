@@ -1,16 +1,21 @@
-<div>
+<div class="list-container">
   <h2>Kommende Events</h2>
-  <a routerLink="/events/new">Neues Event erstellen</a>
-
-  <ul>
-    <li *ngFor="let event of events$ | async">
-      <a [routerLink]="['/events', event._id]">
-        <strong>{{ event.name }}</strong> - {{ event.location }} am {{ event.date | date: 'dd.MM.yyyy' }}
-      </a>
-    </li>
-  </ul>
+  
+  <a class="create-event-link" routerLink="/events/new">Neues Event erstellen</a>
 
   <div *ngIf="!(events$ | async)">
     <p>Lade Events...</p>
   </div>
+
+  <ul class="event-list" *ngIf="events$ | async as events">
+    <li *ngFor="let event of events" class="event-card">
+      <a [routerLink]="['/events', event._id]">
+        <strong>{{ event.name }}</strong>
+        <div class="event-meta">
+          <span>{{ event.location }}</span>
+          <span> &bull; {{ event.date | date: 'dd.MM.yyyy' }}</span>
+        </div>
+      </a>
+    </li>
+  </ul>
 </div>

@@ -1,0 +1,22 @@
+/* frontend/src/app/app.scss */
+
+/* Importiert unsere globalen Variablen (Farben etc.) */
+@import '../styles.scss';
+
+/* Stellt sicher, dass die Host-Komponente den vollen Platz einnimmt */
+:host {
+  display: block;
+}
+
+.app-container {
+  max-width: 960px;  // Maximale Breite für den Inhalt
+  margin: 0 auto;    // Zentriert den Container horizontal
+  padding: 1rem;
+
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $border-color; // Verwendet unsere globale Variable
+    padding-bottom: 1rem;
+  }
+}

@@ -1,0 +1,48 @@
+/* frontend/src/app/event-detail/event-detail.scss */
+@import '../../styles.scss'; // Importiert unsere globalen Variablen
+
+.event-detail-container {
+  background-color: $surface-color;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid $border-color;
+  max-width: 700px;
+  margin: 2rem auto; // Zentriert den Container
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 1.5rem;
+  }
+
+  p {
+    line-height: 1.6;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+
+    strong {
+      color: darken($text-color, 25%);
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.actions {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $border-color;
+  display: flex;
+  gap: 1rem; // Abstand zwischen den Buttons
+}
+
+// Der "Bearbeiten"-Button erbt die globalen Stile und bleibt lila.
+
+.delete-button {
+  background-color: #c53030; // Ein gefährliches Rot
+  color: white;
+
+  &:hover {
+    background-color: darken(#c53030, 10%);
+  }
+}
