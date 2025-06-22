@@ -1,1 +1,115 @@
-/* You can add global styles to this file, and also import other style files */
+/* frontend/src/styles.scss */
+
+/* Schriftart importieren (Beispiel: Inter) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+/* Farbpalette als SCSS-Variablen */
+$background-color: #121212; // Dunkler Hintergrund
+$text-color: #e0e0e0;       // Heller, gut lesbarer Text
+$primary-color: #bb86fc;    // Akzentfarbe (ein sanftes Lila)
+$surface-color: #1e1e1e;     // Farbe für Hintergründe von Elementen
+$border-color: #333333;     // Farbe für Ränder
+
+/* Grundlegende Styles für die ganze Seite */
+body {
+  background-color: $background-color;
+  color: $text-color;
+  font-family: 'Inter', sans-serif; // Hier kannst du deine Wunsch-Schriftart einsetzen
+  margin: 0;
+  padding: 2rem;
+  font-size: 16px;
+}
+
+/* Allgemeine Stile für Überschriften */
+h1, h2, h3 {
+  font-weight: 700;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.3rem; }
+
+/* Grundlegende Button-Styles */
+button {
+  background-color: $primary-color;
+  color: #000000;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: darken($primary-color, 10%);
+}
+
+button:disabled {
+  background-color: #333;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* Grundlegende Formular-Styles */
+input, textarea {
+  background-color: $surface-color;
+  border: 1px solid $border-color;
+  color: $text-color;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box; /* Wichtig für korrektes Padding */
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: $primary-color;
+}
+
+/* Grundlegende Link-Styles */
+a {
+  color: $primary-color;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+/* Stile für Formular-Container */
+.form-container {
+  background-color: $surface-color;
+  padding: 2rem 2.5rem;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 2rem auto; // Zentriert das Formular zusätzlich
+
+  h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Stile für einzelne Formular-Felder */
+.form-field {
+  margin-bottom: 1.5rem; // Abstand zwischen den Feldern
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+}
+
+/* Stile für Fehlermeldungen */
+.error-message {
+  color: #ff6b6b; // Ein leuchtendes Rot für Fehler
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
