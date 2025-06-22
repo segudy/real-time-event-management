@@ -5,12 +5,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EventsModule } from './events/events.module';
 import { HttpModule } from '@nestjs/axios';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     EventsModule,
     HttpModule,
     MongooseModule.forRoot('mongodb://localhost:27017/event-management-db'),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
