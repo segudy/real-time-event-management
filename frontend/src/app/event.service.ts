@@ -14,7 +14,7 @@ export class EventService {
   getEvents(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
-
+  // Methode zum Erstellen eines neuen Events
   createEvent(eventData: any): Observable<any> {
     return this.http.post(this.apiUrl, eventData);
   }
@@ -22,5 +22,10 @@ export class EventService {
   // Methode zum Abrufen eines einzelnen Events
   getEventById(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
+  // Methode zum Löschen eines Events
+  deleteEvent(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

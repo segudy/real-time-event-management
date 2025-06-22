@@ -1,8 +1,8 @@
 // frontend/src/app/event-detail/event-detail.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router'; // Für Routen-Parameter
-import { EventService } from '../event.service'; // Unseren Service importieren
+import { ActivatedRoute, Router } from '@angular/router'; // Router importieren
+import { EventService } from '../event.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,15 +18,30 @@ export class EventDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
+    private router: Router, // Router injizieren
   ) {}
 
   ngOnInit(): void {
-    // ID aus der aktuellen URL auslesen
     const eventId = this.route.snapshot.paramMap.get('id');
-
     if (eventId) {
-      // Service aufrufen, um das spezifische Event zu laden
       this.event$ = this.eventService.getEventById(eventId);
+    }
+  }
+
+  // Methode zum Löschen des Events
+  onDelete(id: string): void {
+    // Sicherheitsabfrage
+    if (confirm('Bist du sicher, dass du dieses Event löschen möchtest?')) {
+      this.eventService.deleteEvent(id).subscribe({
+        next: () => {
+          alert('Event erfolgreich gelöscht.');
+          this.router.navigate(['/events']); // Zurück zur Liste navigieren
+        },
+        error: (err) => {
+          console.error('Fehler beim Löschen des Events:', err);
+          alert('Fehler beim Löschen des Events.');
+        },
+      });
     }
   }
 }
