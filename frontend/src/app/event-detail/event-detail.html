@@ -6,6 +6,7 @@
 
   <hr>
   <div class="actions">
+    <button class="edit-button" [routerLink]="['/events', event._id, 'edit']">Event Bearbeiten</button>
     <button class="delete-button" (click)="onDelete(event._id)">Event Löschen</button>
   </div>
 </div>
