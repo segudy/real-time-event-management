@@ -1,9 +1,12 @@
 <div>
   <h2>Kommende Events</h2>
+  <a routerLink="/events/new">Neues Event erstellen</a>
 
   <ul>
     <li *ngFor="let event of events$ | async">
-      <strong>{{ event.name }}</strong> - {{ event.location }} am {{ event.date | date: 'dd.MM.yyyy' }}
+      <a [routerLink]="['/events', event._id]">
+        <strong>{{ event.name }}</strong> - {{ event.location }} am {{ event.date | date: 'dd.MM.yyyy' }}
+      </a>
     </li>
   </ul>
 
@@ -11,7 +14,3 @@
     <p>Lade Events...</p>
   </div>
 </div>
-
-  <div *ngIf="(events$ | async)?.length === 0">
-    <p>Keine Events gefunden.</p>
-  </div>
