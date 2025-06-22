@@ -28,4 +28,9 @@ export class EventService {
   deleteEvent(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  // Methode zum Aktualisieren eines Events
+  updateEvent(id: string, eventData: any): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}`, eventData);
+  }
 }

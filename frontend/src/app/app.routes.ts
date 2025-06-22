@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login';
 import { RegisterComponent } from './register/register';
 import { CreateEventComponent } from './create-event/create-event';
 import { EventDetailComponent } from './event-detail/event-detail';
+import { EditEventComponent } from './edit-event/edit-event';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -12,6 +13,7 @@ export const routes: Routes = [
 
   // Spezifische 'events'-Route zuerst
   { path: 'events/new', component: CreateEventComponent },
+  { path: 'events/:id/edit', component: EditEventComponent },
 
   // Route mit Parameter :id 
   { path: 'events/:id', component: EventDetailComponent },

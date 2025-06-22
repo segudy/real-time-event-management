@@ -1,0 +1,46 @@
+<div class="form-container">
+  <div *ngIf="editEventForm.value.name; else loading">
+    <h2>Event bearbeiten: {{ editEventForm.value.name }}</h2>
+
+    <form [formGroup]="editEventForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-field">
+        <label for="name">Event-Name</label>
+        <input id="name" type="text" formControlName="name">
+        <div *ngIf="editEventForm.get('name')?.invalid && editEventForm.get('name')?.touched" class="error-message">
+          <small *ngIf="editEventForm.get('name')?.errors?.['required']">Name ist ein Pflichtfeld.</small>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="description">Beschreibung</label>
+        <textarea id="description" formControlName="description"></textarea>
+        <div *ngIf="editEventForm.get('description')?.invalid && editEventForm.get('description')?.touched" class="error-message">
+          <small *ngIf="editEventForm.get('description')?.errors?.['required']">Beschreibung ist ein Pflichtfeld.</small>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="date">Datum und Uhrzeit</label>
+        <input id="date" type="datetime-local" formControlName="date">
+        <div *ngIf="editEventForm.get('date')?.invalid && editEventForm.get('date')?.touched" class="error-message">
+          <small *ngIf="editEventForm.get('date')?.errors?.['required']">Datum ist ein Pflichtfeld.</small>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="location">Ort</label>
+        <input id="location" type="text" formControlName="location">
+        <div *ngIf="editEventForm.get('location')?.invalid && editEventForm.get('location')?.touched" class="error-message">
+          <small *ngIf="editEventForm.get('location')?.errors?.['required']">Ort ist ein Pflichtfeld.</small>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="!editEventForm.valid">Änderungen speichern</button>
+    </form>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Lade Event-Daten zum Bearbeiten...</p>
+</ng-template>
