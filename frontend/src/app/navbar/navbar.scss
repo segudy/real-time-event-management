@@ -1,0 +1,55 @@
+/* frontend/src/app/navbar/navbar.scss */
+@import '../../styles.scss'; // Globale Variablen laden
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: $surface-color;
+  border-bottom: 1px solid $border-color;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $text-color;
+
+  &:hover {
+    text-decoration: none; // Marke soll nicht unterstrichen werden
+  }
+}
+
+.nav-links, .nav-auth {
+  display: flex;
+  gap: 2rem; // Abstand zwischen den Links
+}
+
+.nav-links a, .nav-auth a {
+  font-weight: 700;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+  position: relative; // Für den animierten Unterstrich
+  padding-bottom: 4px;
+
+  // Standard-Unterstrich entfernen
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// Styling für den aktiven Link
+.nav-links a.active-link, .nav-auth a.active-link {
+  color: white; // Hebt den Text hervor
+}
+
+// Animierter Unterstrich für den aktiven Link
+.nav-links a.active-link::after, .nav-auth a.active-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: $primary-color;
+}

@@ -1,0 +1,15 @@
+<nav class="main-nav">
+  <a class="nav-brand" routerLink="/events">
+    EventHub
+  </a>
+
+  <div class="nav-links">
+    <a routerLink="/events" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Event-Liste</a>
+    <a routerLink="/events/new" routerLinkActive="active-link">Neues Event</a>
+  </div>
+
+  <div class="nav-auth">
+    <a routerLink="/login" routerLinkActive="active-link">Login</a>
+    <a routerLink="/register" routerLinkActive="active-link">Registrieren</a>
+  </div>
+</nav>
