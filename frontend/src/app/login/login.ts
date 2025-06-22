@@ -26,9 +26,22 @@ export class LoginComponent {
     });
   }
 
+  // Submit-Methode
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Formulardaten:', this.loginForm.value);
+      console.log('Sende Formulardaten an Backend:', this.loginForm.value);
+      
+      // AuthService wird jetzt aufgerufen
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (response) => {
+          console.log('Antwort vom Backend:', response);
+          alert('Login erfolgreich! (Siehe Konsole für Details)');
+        },
+        error: (err) => {
+          console.error('Fehler beim Login:', err);
+          alert('Login fehlgeschlagen! (Siehe Konsole für Details)');
+        },
+      });
     } else {
       console.log('Formular ist ungültig');
     }
