@@ -1,0 +1,41 @@
+<div class="form-container">
+  <h2>Neues Event erstellen</h2>
+
+  <form [formGroup]="createEventForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-field">
+      <label for="name">Event-Name</label>
+      <input id="name" type="text" formControlName="name" placeholder="Name des Events">
+      <div *ngIf="createEventForm.get('name')?.invalid && createEventForm.get('name')?.touched" class="error-message">
+        <small *ngIf="createEventForm.get('name')?.errors?.['required']">Name ist ein Pflichtfeld.</small>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="description">Beschreibung</label>
+      <textarea id="description" formControlName="description" placeholder="Beschreibe dein Event..."></textarea>
+      <div *ngIf="createEventForm.get('description')?.invalid && createEventForm.get('description')?.touched" class="error-message">
+        <small *ngIf="createEventForm.get('description')?.errors?.['required']">Beschreibung ist ein Pflichtfeld.</small>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="date">Datum und Uhrzeit</label>
+      <input id="date" type="datetime-local" formControlName="date">
+      <div *ngIf="createEventForm.get('date')?.invalid && createEventForm.get('date')?.touched" class="error-message">
+        <small *ngIf="createEventForm.get('date')?.errors?.['required']">Datum ist ein Pflichtfeld.</small>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="location">Ort</label>
+      <input id="location" type="text" formControlName="location" placeholder="Veranstaltungsort">
+      <div *ngIf="createEventForm.get('location')?.invalid && createEventForm.get('location')?.touched" class="error-message">
+        <small *ngIf="createEventForm.get('location')?.errors?.['required']">Ort ist ein Pflichtfeld.</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!createEventForm.valid">Event erstellen</button>
+
+  </form>
+</div>
