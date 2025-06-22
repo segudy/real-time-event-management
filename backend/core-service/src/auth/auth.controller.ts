@@ -11,4 +11,10 @@ export class AuthController {
   login(@Body() loginDto: any) {
     return this.authService.login(loginDto);
   }
+
+  // POST /auth/register Route
+  @Post('register')
+  register(@Body() registerDto: any) {
+    return this.authService.register(registerDto);
+  }
 }
