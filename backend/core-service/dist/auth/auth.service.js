@@ -17,6 +17,13 @@ let AuthService = class AuthService {
             token: 'jwt-placeholder-token',
         };
     }
+    register(registerData) {
+        console.log('Registrierungs-Anfrage im Backend erhalten:', registerData);
+        return {
+            message: 'Registrierung erfolgreich (Platzhalter)',
+            userId: 'new-user-placeholder-456',
+        };
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

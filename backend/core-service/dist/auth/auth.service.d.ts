@@ -4,4 +4,8 @@ export declare class AuthService {
         userId: string;
         token: string;
     };
+    register(registerData: any): {
+        message: string;
+        userId: string;
+    };
 }

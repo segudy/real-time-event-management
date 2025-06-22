@@ -2,19 +2,22 @@
 import { Routes } from '@angular/router';
 import { EventListComponent } from './event-list/event-list';
 import { LoginComponent } from './login/login';
-import { RegisterComponent } from './register/register'; 
+import { RegisterComponent } from './register/register';
+import { CreateEventComponent } from './create-event/create-event';
 
 export const routes: Routes = [
-  // Route für die Event-Liste
-  { path: 'events', component: EventListComponent },
-
-  // Route für unsere Login-Seite
   { path: 'login', component: LoginComponent },
-
-  // Route für unsere Registrierungs-Seite
   { path: 'register', component: RegisterComponent },
 
-  // Standard-Route (optional, leitet auf /events um)
-  { path: '', redirectTo: '/events', pathMatch: 'full' },
+  // Spezifische 'events'-Route zuerst
+  { path: 'events/new', component: CreateEventComponent },
 
+  // Allgemeine 'events'-Route danach
+  { path: 'events', component: EventListComponent },
+  
+  // Platzhalter für die zukünftige Detail-Route
+  // { path: 'events/:id', component: EventDetailComponent },
+
+  // Standard-Route
+  { path: '', redirectTo: '/events', pathMatch: 'full' },
 ];
