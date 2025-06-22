@@ -1,0 +1,28 @@
+<div class="form-container">
+  <h2>Login</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-field">
+      <label for="email">E-Mail</label>
+      <input id="email" type="email" formControlName="email" placeholder="deine@email.de">
+      
+      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
+        <small *ngIf="loginForm.get('email')?.errors?.['required']">E-Mail ist ein Pflichtfeld.</small>
+        <small *ngIf="loginForm.get('email')?.errors?.['email']">Bitte eine gültige E-Mail eingeben.</small>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="password">Passwort</label>
+      <input id="password" type="password" formControlName="password" placeholder="Dein Passwort">
+
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+        <small *ngIf="loginForm.get('password')?.errors?.['required']">Passwort ist ein Pflichtfeld.</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!loginForm.valid">Login</button>
+
+  </form>
+</div>
