@@ -1,0 +1,12 @@
+# kubernetes/realtime-service-service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: realtime-service
+spec:
+  selector:
+    app: realtime-service
+  ports:
+    - protocol: TCP
+      port: 3002
+      targetPort: 3002

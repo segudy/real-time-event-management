@@ -1,0 +1,21 @@
+# kubernetes/realtime-service-deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realtime-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: realtime-service
+  template:
+    metadata:
+      labels:
+        app: realtime-service
+    spec:
+      containers:
+        - name: realtime-service
+          image: realtime-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3002

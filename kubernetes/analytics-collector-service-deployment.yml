@@ -1,0 +1,21 @@
+# kubernetes/analytics-collector-service-deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics-collector-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics-collector-service
+  template:
+    metadata:
+      labels:
+        app: analytics-collector-service
+    spec:
+      containers:
+        - name: analytics-collector-service
+          image: analytics-collector-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3003
