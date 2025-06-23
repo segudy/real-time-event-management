@@ -9,7 +9,7 @@ import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class EventsService {
-  private readonly realtimeServiceUrl = 'http://localhost:3002';
+  private readonly realtimeServiceUrl = 'http://realtime-service:3002';
 
   constructor(
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
