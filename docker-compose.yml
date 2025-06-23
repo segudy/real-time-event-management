@@ -1,0 +1,45 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  # MongoDB Datenbank
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  # Core Service (Backend)
+  core-service:
+    image: core-service:latest
+    ports:
+      - "3000:3000"
+    environment:
+      # Wir übergeben die Adresse der Datenbank als Umgebungsvariable
+      - DATABASE_URL=mongodb://mongo:27017/event-management-db
+    depends_on:
+      - mongo
+
+  # Realtime Service (Backend)
+  realtime-service:
+    image: realtime-service:latest
+    ports:
+      - "3002:3002"
+
+  # Analytics Collector Service (Backend)
+  analytics-collector-service:
+    image: analytics-collector-service:latest
+    ports:
+      - "3003:3003"
+
+  # Frontend App (mit Nginx)
+  frontend-app:
+    image: frontend-app:latest
+    ports:
+      - "4200:80"
+
+# Docker erstellt ein benanntes Volume, um die Datenbankdaten persistent zu speichern
+volumes:
+  mongodb_data:

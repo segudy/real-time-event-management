@@ -11,8 +11,10 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     EventsModule,
     HttpModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/event-management-db'),
     AuthModule,
+    MongooseModule.forRoot(
+      process.env.DATABASE_URL || 'mongodb://localhost:27017/event-management-db',
+    ),
   ],
   controllers: [AppController],
   providers: [AppService],
