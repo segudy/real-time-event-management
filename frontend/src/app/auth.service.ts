@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   // Basis-URL für Auth-Endpunkte
-  private apiUrl = 'http://localhost:3000/auth'; // Zeigt auf den core-service
+  private apiUrl = '/api/auth'; // Zeigt auf den core-service
 
   // HttpClient injizieren
   constructor(private http: HttpClient) {}

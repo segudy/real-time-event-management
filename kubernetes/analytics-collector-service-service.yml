@@ -1,0 +1,12 @@
+# kubernetes/analytics-collector-service-service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: analytics-collector-service
+spec:
+  selector:
+    app: analytics-collector-service
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3003
