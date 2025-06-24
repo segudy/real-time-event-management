@@ -22,8 +22,8 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             events_module_1.EventsModule,
             axios_1.HttpModule,
-            mongoose_1.MongooseModule.forRoot('mongodb://localhost:27017/event-management-db'),
             auth_module_1.AuthModule,
+            mongoose_1.MongooseModule.forRoot(process.env.DATABASE_URL || 'mongodb://localhost:27017/event-management-db'),
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

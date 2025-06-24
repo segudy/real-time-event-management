@@ -21,7 +21,7 @@ const axios_1 = require("@nestjs/axios");
 let EventsService = class EventsService {
     eventModel;
     httpService;
-    realtimeServiceUrl = 'http://localhost:3002';
+    realtimeServiceUrl = 'http://realtime-service:3002';
     constructor(eventModel, httpService) {
         this.eventModel = eventModel;
         this.httpService = httpService;

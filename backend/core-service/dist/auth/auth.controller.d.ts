@@ -7,8 +7,5 @@ export declare class AuthController {
         userId: string;
         token: string;
     };
-    register(registerDto: any): {
-        message: string;
-        userId: string;
-    };
+    register(registerDto: any): Promise<import("./schemas/user.schema").User>;
 }
