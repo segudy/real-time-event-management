@@ -1,0 +1,33 @@
+/backend/core-service/node_modules/
+/backend/realtime-service/node_modules/
+/backend/analytics-collector-service/node_modules/
+
+/backend/core-service/dist/
+/backend/realtime-service/dist/
+/backend/analytics-collector-service/dist/
+# Compiled output
+/dist
+
+# Dependencies
+/node_modules
+
+# Environment variables
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and editors
+.idea
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

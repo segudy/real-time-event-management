@@ -1,0 +1,32 @@
+# kubernetes/ingress-service.yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: event-management-ingress
+  annotations:
+    # Stellt sicher, dass der Nginx-Controller diesen Ingress beachtet
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      # Regel 1: Leitet alles unter /api/ an den core-service
+      - path: /api/
+        pathType: Prefix
+        backend:
+          service:
+            name: core-service
+            port:
+              number: 3000
+      
+      # Anmerkung: Eine WebSocket-Regel würde hier folgen, falls nötig.
+
+      # Regel 2: Leitet alles andere (/) an das Frontend (muss am Ende stehen)
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-app
+            port:
+              number: 80

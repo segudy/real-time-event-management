@@ -1,0 +1,63 @@
+<div class="list-container">
+  <!-- Header with title and action buttons -->
+  <div class="list-header">
+    <h2>Kommende Events</h2>
+    
+    <!-- Action buttons -->
+    <div class="header-actions">
+      <!-- Create Event Button -->
+      <a *ngIf="authService.getUserRole() === 'organizer' || authService.getUserRole() === 'admin'" 
+         class="create-event-btn" 
+         routerLink="/events/new">
+        <span class="btn-icon">+</span>
+        Neues Event erstellen
+      </a>
+      
+      <!-- Admin Dropdown Menu -->
+      <div *ngIf="authService.getUserRole() === 'admin'" 
+           class="admin-dropdown" 
+           [class.dropdown-open]="dropdownOpen">        <button class="dropdown-toggle" 
+                (click)="toggleDropdown($event)"
+                [attr.aria-expanded]="dropdownOpen">
+          <span class="dropdown-icon">⚙</span>
+          Admin
+          <span class="dropdown-arrow" [class.rotated]="dropdownOpen">▼</span>
+        </button>        <div class="dropdown-menu" *ngIf="dropdownOpen">
+          <button class="dropdown-item" 
+                  (click)="onCreateRandomEvents()">
+            <span class="item-icon">🎲</span>
+            25 Demo Events erstellen
+          </button>
+          
+          <button class="dropdown-item danger" 
+                  [class.confirm-pending]="deleteConfirmationPending"
+                  (click)="onDeleteAll()">
+            <span class="item-icon">🗑</span>
+            <span *ngIf="!deleteConfirmationPending">Alle Events löschen</span>
+            <span *ngIf="deleteConfirmationPending">Bestätigen: Löschen</span>
+          </button>
+          <!-- Add more admin actions here in the future -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ul class="event-list" *ngIf="events$ | async as events; else loading">
+    <li *ngFor="let event of events" class="event-card">
+      <a [routerLink]="['/events', event._id]">
+        <strong>{{ event.name }}</strong>
+        <div class="event-meta">
+          <span>{{ event.location }}</span>
+          <span> &bull; {{ event.date | date: 'dd.MM.yyyy' }}</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+  <ng-template #loading>
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Lade Events...</p>
+    </div>
+  </ng-template>
+</div>

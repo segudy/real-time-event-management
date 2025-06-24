@@ -1,0 +1,127 @@
+/* frontend/src/app/navbar/navbar.scss */
+@use '../../styles/variables' as *; // Globale Variablen laden
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-xl);
+  background-color: $surface-color;
+  border-bottom: 1px solid $border-color;
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  
+  // Smooth transitions
+  transition: all var(--transition-normal);
+  
+  // Subtle backdrop blur effect
+  backdrop-filter: blur(10px);
+  
+  // Enhanced shadow
+  box-shadow: var(--shadow-sm);
+  
+  @media (max-width: 768px) {
+    padding: var(--space-sm) var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $text-color;
+  transition: all var(--transition-normal);
+  
+  &:hover {
+    text-decoration: none;
+    color: $primary-light;
+    transform: scale(1.02);
+  }
+  
+  &::after {
+    display: none; // Remove underline animation for brand
+  }
+}
+
+.nav-links, .nav-auth {
+  display: flex;
+  gap: var(--space-xl);
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Webkit browsers */
+  }
+  
+  @media (max-width: 768px) {
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.nav-links a, .nav-auth a {
+  font-weight: 700;
+  font-size: 1rem;
+  position: relative;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  
+  // Remove default link underline behavior
+  &::after {
+    display: none;
+  }
+  
+  // Hover state with background
+  &:hover {
+    text-decoration: none;
+    background-color: hsla($hue-primary, 85%, 76%, 0.1);
+    color: $primary-light;
+    transform: translateY(-1px);
+  }
+  
+  // Focus state for accessibility
+  &:focus-visible {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+}
+
+// Enhanced styling for the active link
+.nav-links a.active-link, .nav-auth a.active-link {
+  color: $primary-light;
+  background-color: hsla($hue-primary, 85%, 76%, 0.15);
+  
+  // Enhanced active indicator
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, $primary-color, transparent);
+    border-radius: 1px;
+    animation: activeGlow 2s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes activeGlow {
+  from {
+    opacity: 0.6;
+    transform: translateX(-50%) scaleX(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1);
+  }
+}

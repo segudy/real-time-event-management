@@ -1,0 +1,6 @@
+# Verzeichnisse, die Docker ignorieren soll
+node_modules
+dist
+.git
+.vscode
+.angular

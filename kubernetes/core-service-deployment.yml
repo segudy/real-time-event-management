@@ -1,0 +1,26 @@
+# kubernetes/core-service-deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: core-service
+  template:
+    metadata:
+      labels:
+        app: core-service
+    spec:
+      containers:
+        - name: core-service
+          image: core-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              value: mongodb://mongo:27017/event-management-db
+            - name: REALTIME_SERVICE_URL
+              value: http://realtime-service:3002

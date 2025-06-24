@@ -1,0 +1,140 @@
+/* frontend/src/app/event-detail/event-detail.scss */
+@use '../../styles/variables' as *; // Importiert unsere globalen Variablen
+
+.event-detail-container {
+  background: linear-gradient(145deg, $surface-color, $surface-elevated);
+  padding: var(--space-2xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid $border-color;
+  max-width: 800px;
+  margin: var(--space-xl) auto;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  
+  // Entrance animation
+  animation: slideInUp var(--transition-slow) ease-out;
+  
+  // Subtle top accent
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-color, $primary-light, $primary-color);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  h2 {
+    margin: 0 0 var(--space-lg) 0;
+    padding-bottom: var(--space-lg);
+    position: relative;
+    color: $primary-light;
+    
+    // Enhanced border
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, $primary-color, transparent);
+    }
+  }
+
+  p {
+    line-height: 1.7;
+    font-size: 1.1rem;
+    margin-bottom: var(--space-md);
+    transition: color var(--transition-normal);
+
+    strong {
+      color: $text-color;
+      margin-right: var(--space-sm);
+      font-weight: 700;
+    }
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.actions {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  position: relative;
+  display: flex;
+  gap: var(--space-md);
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  
+  // Enhanced border
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $border-color, transparent);
+  }
+  
+  // Staggered animation for buttons
+  button {
+    animation: fadeInScale var(--transition-normal) ease-out backwards;
+    
+    &:nth-child(1) { animation-delay: 0.1s; }
+    &:nth-child(2) { animation-delay: 0.2s; }
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Enhanced delete button with gradient
+.delete-button {
+  background: linear-gradient(135deg, hsl(0, 75%, 60%), hsl(0, 75%, 50%));
+  color: white;
+  position: relative;
+  overflow: hidden;
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, hsl(0, 75%, 50%), hsl(0, 75%, 40%));
+  }
+  
+  // Subtle warning pulse animation
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, hsla(0, 75%, 100%, 0.3), transparent);
+    transition: all var(--transition-normal);
+    transform: translate(-50%, -50%);
+  }
+  
+  &:hover::before {
+    width: 100%;
+    height: 100%;
+  }
+}
