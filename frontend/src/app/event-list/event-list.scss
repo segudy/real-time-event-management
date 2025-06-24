@@ -7,6 +7,29 @@
   font-weight: 700;
 }
 
+.admin-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  align-items: center;
+}
+
+.delete-all-button {
+  background-color: #c53030; // Dangerous red color
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: darken(#c53030, 10%);
+  }
+}
+
 .event-list {
   list-style: none; // Entfernt die Aufzählungspunkte
   padding: 0;

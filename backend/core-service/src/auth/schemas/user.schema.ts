@@ -8,6 +8,7 @@ export type UserDocument = HydratedDocument<User>;
 export enum UserRole {
   ATTENDEE = 'attendee',    // Privatperson
   ORGANIZER = 'organizer',  // Unternehmen
+  ADMIN = 'admin',          // Administrator
 }
 
 @Schema({ timestamps: true })
@@ -17,7 +18,7 @@ export class User {
   email: string;
 
   @Prop({ required: true })
-  password: string; // Wird später gehasht
+  password: string;
 
   @Prop({ required: true, enum: UserRole })
   role: UserRole;

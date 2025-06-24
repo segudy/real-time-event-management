@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 export class EventDetailComponent implements OnInit {
   event$!: Observable<any>;
   
-  // Wir machen den AuthService public, damit das Template direkt darauf zugreifen kann
+  // Wir machen den AuthService public und entfernen die alte isOrganizer-Eigenschaft
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
@@ -31,7 +31,6 @@ export class EventDetailComponent implements OnInit {
     }
   }
 
-  // Die onDelete-Methode bleibt unverändert
   onDelete(id: string): void {
     if (confirm('Bist du sicher, dass du dieses Event löschen möchtest?')) {
       this.eventService.deleteEvent(id).subscribe({

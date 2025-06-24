@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 // Definiert die Rollen-Typen für Typsicherheit
-type UserRole = 'attendee' | 'organizer';
+type UserRole = 'attendee' | 'organizer' | 'admin';
 
 @Component({
   selector: 'app-register',

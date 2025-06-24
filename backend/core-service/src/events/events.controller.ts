@@ -1,19 +1,21 @@
 // backend/core-service/src/events/events.controller.ts
-import { Controller, Post, Body, ValidationPipe, Get, Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe, Get, Param, Patch, Delete, UseGuards, HttpCode } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { RolesGuard } from '../auth/roles/roles.guard';
+import { AdminGuard } from '../auth/roles/admin.guard';
 
 @Controller('api/events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
   @Post()
+  @UseGuards(RolesGuard)
   create(@Body(new ValidationPipe()) createEventDto: CreateEventDto) {
     return this.eventsService.create(createEventDto);
   }
 
-  // Diese Methode ist entscheidend für GET /events
   @Get()
   findAll() {
     return this.eventsService.findAll();
@@ -25,12 +27,22 @@ export class EventsController {
   }
 
   @Patch(':id')
+  @UseGuards(RolesGuard)
   update(@Param('id') id: string, @Body(new ValidationPipe()) updateEventDto: UpdateEventDto) {
     return this.eventsService.update(id, updateEventDto);
   }
-  
+
   @Delete(':id')
+  @UseGuards(RolesGuard)
   remove(@Param('id') id: string) {
     return this.eventsService.remove(id);
+  }
+
+  // Admin-only endpoint to delete all events
+  @Delete()
+  @UseGuards(AdminGuard)
+  @HttpCode(200)
+  removeAll() {
+    return this.eventsService.removeAll();
   }
 }

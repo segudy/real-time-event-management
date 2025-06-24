@@ -3,9 +3,7 @@
   <p><strong>Beschreibung:</strong> {{ event.description }}</p>
   <p><strong>Ort:</strong> {{ event.location }}</p>
   <p><strong>Datum:</strong> {{ event.date | date: 'full' }}</p>
-
-  <div *ngIf="authService.getUserRole() === 'organizer' && authService.getUserId() === event.organizerId" class="actions">
-    <hr>
+  <div *ngIf="authService.getUserRole() === 'organizer' && authService.getUserId() === event.organizerId || authService.getUserRole() === 'admin'" class="actions">
     <button class="edit-button" [routerLink]="['/events', event._id, 'edit']">Event Bearbeiten</button>
     <button class="delete-button" (click)="onDelete(event._id)">Event Löschen</button>
   </div>

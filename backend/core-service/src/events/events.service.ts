@@ -75,4 +75,10 @@ export class EventsService {
     }
     return deletedEvent;
   }
+
+  // Admin-only: Delete all events
+  async removeAll(): Promise<{ deletedCount: number }> {
+    const result = await this.eventModel.deleteMany({}).exec();
+    return { deletedCount: result.deletedCount };
+  }
 }

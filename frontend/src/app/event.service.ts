@@ -33,4 +33,9 @@ export class EventService {
   updateEvent(id: string, eventData: any): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${id}`, eventData);
   }
+
+  // Admin-only: Methode zum Löschen aller Events
+  deleteAllEvents(): Observable<{ deletedCount: number }> {
+    return this.http.delete<{ deletedCount: number }>(this.apiUrl);
+  }
 }
