@@ -2,7 +2,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
-@Controller('api/auth')
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -12,7 +12,7 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  // POST /auth/register Route
+  // NEUE Route für die Registrierung
   @Post('register')
   register(@Body() registerDto: any) {
     return this.authService.register(registerDto);

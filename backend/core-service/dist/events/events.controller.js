@@ -75,7 +75,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EventsController.prototype, "remove", null);
 exports.EventsController = EventsController = __decorate([
-    (0, common_1.Controller)('events'),
+    (0, common_1.Controller)('api/events'),
     __metadata("design:paramtypes", [events_service_1.EventsService])
 ], EventsController);
 //# sourceMappingURL=events.controller.js.map
