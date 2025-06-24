@@ -1,43 +1,59 @@
 <div class="form-container">
   <h2>Registrieren</h2>
+  <p>Ich melde mich an als...</p>
+
+  <div class="role-selector">
+    <button type="button" 
+            [class.active]="selectedRole === 'attendee'"
+            (click)="selectRole('attendee')">
+      Privatperson
+    </button>
+    <button type="button"
+            [class.active]="selectedRole === 'organizer'"
+            (click)="selectRole('organizer')">
+      Unternehmen
+    </button>
+  </div>
 
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
     <div class="form-field">
-      <label for="firstName">Vorname</label>
-      <input id="firstName" type="text" formControlName="firstName" placeholder="Max">
-      <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="error-message">
-        <small *ngIf="registerForm.get('firstName')?.errors?.['required']">Vorname ist ein Pflichtfeld.</small>
-      </div>
+      <label for="email">E-Mail-Adresse</label>
+      <input id="email" type="email" formControlName="email">
     </div>
-
-    <div class="form-field">
-      <label for="lastName">Nachname</label>
-      <input id="lastName" type="text" formControlName="lastName" placeholder="Mustermann">
-      <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="error-message">
-        <small *ngIf="registerForm.get('lastName')?.errors?.['required']">Nachname ist ein Pflichtfeld.</small>
-      </div>
-    </div>
-
-    <div class="form-field">
-      <label for="email">E-Mail</label>
-      <input id="email" type="email" formControlName="email" placeholder="deine@email.de">
-      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
-        <small *ngIf="registerForm.get('email')?.errors?.['required']">E-Mail ist ein Pflichtfeld.</small>
-        <small *ngIf="registerForm.get('email')?.errors?.['email']">Bitte eine gültige E-Mail eingeben.</small>
-      </div>
-    </div>
-
     <div class="form-field">
       <label for="password">Passwort</label>
       <input id="password" type="password" formControlName="password" placeholder="Mind. 8 Zeichen">
-      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
-        <small *ngIf="registerForm.get('password')?.errors?.['required']">Passwort ist ein Pflichtfeld.</small>
-        <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Das Passwort muss mindestens 8 Zeichen lang sein.</small>
+    </div>
+
+    <div *ngIf="selectedRole === 'attendee'">
+      <div class="form-field">
+        <label for="firstName">Vorname</label>
+        <input id="firstName" type="text" formControlName="firstName">
+      </div>
+      <div class="form-field">
+        <label for="lastName">Nachname</label>
+        <input id="lastName" type="text" formControlName="lastName">
       </div>
     </div>
 
-    <button type="submit" [disabled]="!registerForm.valid">Registrieren</button>
+    <div *ngIf="selectedRole === 'organizer'">
+        <div class="form-field">
+        <label for="companyName">Firmenname</label>
+        <input id="companyName" type="text" formControlName="companyName">
+      </div>
+      <div class="form-field">
+        <label for="contactPerson">Ansprechpartner</label>
+        <input id="contactPerson" type="text" formControlName="contactPerson">
+      </div>
+      <div class="form-field">
+        <label for="vatId">USt-IdNr.</label>
+        <input id="vatId" type="text" formControlName="vatId">
+      </div>
+    </div>
 
+    <button type="submit" [disabled]="!registerForm.valid">
+      {{ selectedRole === 'attendee' ? 'Jetzt Registrieren' : 'Unternehmenskonto Erstellen' }}
+    </button>
   </form>
 </div>
