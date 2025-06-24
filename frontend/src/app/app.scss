@@ -1,22 +1,59 @@
 /* frontend/src/app/app.scss */
 
-/* Importiert unsere globalen Variablen (Farben etc.) */
-@import '../styles.scss';
+/* Use @use instead of @import for Sass variables */
+@use '../styles/variables' as *;
 
 /* Stellt sicher, dass die Host-Komponente den vollen Platz einnimmt */
 :host {
   display: block;
+  min-height: 100vh;
 }
 
 .app-container {
-  max-width: 960px;  // Maximale Breite für den Inhalt
-  margin: 0 auto;    // Zentriert den Container horizontal
-  padding: 1rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-md);
+  overflow-x: hidden;
+  box-sizing: border-box;
+  
+  // Smooth entrance animation
+  animation: fadeIn var(--transition-slow) ease-out;
 
   header {
     text-align: center;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid $border-color; // Verwendet unsere globale Variable
-    padding-bottom: 1rem;
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-lg);
+    position: relative;
+    
+    // Enhanced border with gradient
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(200px, 80%);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, $border-color, transparent);
+    }
+    
+    h1 {
+      background: linear-gradient(135deg, $text-color, $primary-light);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: var(--space-sm);
+      word-wrap: break-word;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

@@ -1,16 +1,17 @@
 /* frontend/src/app/register/register.scss */
-@import '../../styles.scss';
+@use '../../styles/variables' as *;
 
 .role-selector {
   display: flex;
-  margin-bottom: 2.5rem;
+  margin-bottom: var(--space-2xl);
   border: 1px solid $border-color;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
+  background: linear-gradient(145deg, $surface-color, $surface-elevated);
 
   button {
-    flex-grow: 1; // Beide Buttons nehmen gleich viel Platz ein
-    padding: 1rem;
+    flex-grow: 1;
+    padding: var(--space-lg);
     background-color: transparent;
     color: $text-color;
     border: none;
@@ -18,7 +19,8 @@
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    position: relative;
+    transition: all var(--transition-normal);
 
     // Trennlinie zwischen den Buttons
     &:first-child {
@@ -27,13 +29,23 @@
 
     // Aktiver Zustand
     &.active {
-      background-color: $primary-color;
-      color: black;
+      background: linear-gradient(135deg, $primary-color, $primary-hover);
+      color: hsl($hue-neutral, 0%, 0%);
+      transform: scale(1.02);
+      box-shadow: inset 0 2px 4px hsla($hue-primary, 85%, 76%, 0.3);
     }
 
     // Hover-Effekt für den inaktiven Button
     &:not(.active):hover {
-      background-color: $surface-color;
+      background-color: $surface-elevated;
+      color: $primary-light;
+      transform: translateY(-1px);
+    }
+    
+    // Focus state for accessibility
+    &:focus-visible {
+      outline: 2px solid $primary-light;
+      outline-offset: 2px;
     }
   }
 }

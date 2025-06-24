@@ -1,0 +1,19 @@
+/* frontend/src/styles/_variables.scss */
+
+/* Farbpalette als SCSS-Variablen mit HSL-Werten */
+$hue-primary: 264;
+$hue-neutral: 0;
+
+// Base colors using HSL
+$background-color: hsl($hue-neutral, 0%, 7%);     // #121212 - Dunkler Hintergrund
+$text-color: hsl($hue-neutral, 0%, 88%);          // #e0e0e0 - Heller, gut lesbarer Text
+$primary-color: hsl($hue-primary, 85%, 76%);      // #bb86fc - Akzentfarbe (ein sanftes Lila)
+$surface-color: hsl($hue-neutral, 0%, 12%);       // #1e1e1e - Farbe für Hintergründe von Elementen
+$border-color: hsl($hue-neutral, 0%, 20%);        // #333333 - Farbe für Ränder
+
+// Additional harmonious colors
+$primary-hover: hsl($hue-primary, 85%, 66%);      // Darker primary for hover states
+$primary-light: hsl($hue-primary, 85%, 86%);      // Lighter primary for subtle accents
+$text-muted: hsl($hue-neutral, 0%, 60%);          // Muted text color
+$surface-elevated: hsl($hue-neutral, 0%, 15%);    // Elevated surface color
+$error-color: hsl(0, 75%, 70%);                   // Error color using red hue

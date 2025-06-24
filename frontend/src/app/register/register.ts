@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { ToastService } from '../toast.service';
 
 // Definiert die Rollen-Typen für Typsicherheit
 type UserRole = 'attendee' | 'organizer' | 'admin';
@@ -23,11 +24,11 @@ type UserRole = 'attendee' | 'organizer' | 'admin';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   selectedRole: UserRole = 'attendee'; // Standardmäßig ist "Privatperson" ausgewählt
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit(): void {
@@ -75,16 +76,23 @@ export class RegisterComponent implements OnInit {
         role: this.selectedRole,
       };
 
-      console.log('Sende Registrierungsdaten an Backend:', finalData);
-      this.authService.register(finalData).subscribe({
+      console.log('Sende Registrierungsdaten an Backend:', finalData);      this.authService.register(finalData).subscribe({
         next: (response) => {
           console.log('Antwort vom Backend:', response);
-          alert('Registrierung erfolgreich! Bitte loggen Sie sich nun ein.');
-          this.router.navigate(['/login']); // Leitet zur Login-Seite weiter
+          this.toastService.success(
+            'Ihr Account wurde erfolgreich erstellt. Sie können sich jetzt anmelden.',
+            'Registrierung erfolgreich!'
+          );
+          setTimeout(() => {
+            this.router.navigate(['/login']); // Leitet zur Login-Seite weiter
+          }, 2000);
         },
         error: (err) => {
           console.error('Fehler bei der Registrierung:', err);
-          alert('Registrierung fehlgeschlagen! (Siehe Konsole)');
+          this.toastService.error(
+            'Bei der Registrierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+            'Registrierung fehlgeschlagen'
+          );
         },
       });
     }

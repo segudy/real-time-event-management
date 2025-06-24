@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { EventService } from '../event.service';
 import { AuthService } from '../auth.service'; // AuthService importieren
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-create-event',
@@ -26,6 +27,7 @@ export class CreateEventComponent {
     private eventService: EventService,
     private authService: AuthService, // AuthService injizieren
     private router: Router,
+    private toastService: ToastService,
   ) {
     this.createEventForm = this.fb.group({
       name: ['', Validators.required],
@@ -41,7 +43,10 @@ export class CreateEventComponent {
       const currentUserId = this.authService.getUserId();
 
       if (!currentUserId) {
-        alert('Fehler: Nicht eingeloggt oder keine User-ID gefunden.');
+        this.toastService.error(
+          'Sie müssen angemeldet sein, um ein Event zu erstellen.',
+          'Nicht angemeldet'
+        );
         return; // Aktion abbrechen
       }
 
@@ -53,12 +58,20 @@ export class CreateEventComponent {
       this.eventService.createEvent(eventData).subscribe({
         next: (response) => {
           console.log('Event erfolgreich erstellt:', response);
-          alert('Event erfolgreich erstellt!');
-          this.router.navigate(['/events']);
+          this.toastService.success(
+            'Ihr Event wurde erfolgreich erstellt und ist jetzt verfügbar.',
+            'Event erstellt!'
+          );
+          setTimeout(() => {
+            this.router.navigate(['/events']);
+          }, 2000);
         },
         error: (err) => {
           console.error('Fehler beim Erstellen des Events:', err);
-          alert('Fehler beim Erstellen des Events!');
+          this.toastService.error(
+            'Beim Erstellen des Events ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+            'Erstellung fehlgeschlagen'
+          );
         },
       });
     }

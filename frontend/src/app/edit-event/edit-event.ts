@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event.service';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-edit-event',
@@ -26,6 +27,7 @@ export class EditEventComponent implements OnInit {
     private eventService: EventService,
     private fb: FormBuilder,
     private router: Router,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit(): void {
@@ -54,9 +56,23 @@ export class EditEventComponent implements OnInit {
     if (this.editEventForm.valid) {
       this.eventService
         .updateEvent(this.eventId, this.editEventForm.value)
-        .subscribe(() => {
-          alert('Event erfolgreich aktualisiert!');
-          this.router.navigate(['/events', this.eventId]); // Zurück zur Detail-Seite
+        .subscribe({
+          next: () => {
+            this.toastService.success(
+              'Alle Änderungen wurden erfolgreich gespeichert.',
+              'Event aktualisiert!'
+            );
+            setTimeout(() => {
+              this.router.navigate(['/events', this.eventId]); // Zurück zur Detail-Seite
+            }, 1500);
+          },
+          error: (err) => {
+            console.error('Fehler beim Aktualisieren des Events:', err);
+            this.toastService.error(
+              'Beim Speichern der Änderungen ist ein Fehler aufgetreten.',
+              'Aktualisierung fehlgeschlagen'
+            );
+          }
         });
     }
   }

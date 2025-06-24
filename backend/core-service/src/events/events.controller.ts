@@ -10,6 +10,14 @@ import { AdminGuard } from '../auth/roles/admin.guard';
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
+  // Admin-only endpoint to create 25 random events (must come before generic POST)
+  @Post('bulk/random')
+  @UseGuards(AdminGuard)
+  @HttpCode(201)
+  createRandomEvents() {
+    return this.eventsService.createRandomEvents();
+  }
+
   @Post()
   @UseGuards(RolesGuard)
   create(@Body(new ValidationPipe()) createEventDto: CreateEventDto) {

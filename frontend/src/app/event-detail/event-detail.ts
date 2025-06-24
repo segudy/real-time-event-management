@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EventService } from '../event.service';
 import { AuthService } from '../auth.service';
+import { ToastService } from '../toast.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -22,6 +23,7 @@ export class EventDetailComponent implements OnInit {
     private eventService: EventService,
     private router: Router,
     public authService: AuthService,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit(): void {
@@ -35,12 +37,20 @@ export class EventDetailComponent implements OnInit {
     if (confirm('Bist du sicher, dass du dieses Event löschen möchtest?')) {
       this.eventService.deleteEvent(id).subscribe({
         next: () => {
-          alert('Event erfolgreich gelöscht.');
-          this.router.navigate(['/events']);
+          this.toastService.success(
+            'Das Event wurde erfolgreich entfernt.',
+            'Event gelöscht'
+          );
+          setTimeout(() => {
+            this.router.navigate(['/events']);
+          }, 1500);
         },
         error: (err) => {
           console.error('Fehler beim Löschen des Events:', err);
-          alert('Fehler beim Löschen des Events.');
+          this.toastService.error(
+            'Beim Löschen des Events ist ein Fehler aufgetreten.',
+            'Löschvorgang fehlgeschlagen'
+          );
         },
       });
     }
