@@ -34,6 +34,7 @@
   border-top: 1px solid $border-color;
   display: flex;
   gap: 1rem; // Abstand zwischen den Buttons
+  justify-content: flex-end; // Buttons nach rechts ausrichten
 }
 
 // Der "Bearbeiten"-Button erbt die globalen Stile und bleibt lila.
