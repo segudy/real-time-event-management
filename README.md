@@ -40,7 +40,53 @@ Dieses Projekt ist eine Event-Management-Plattform, die im Rahmen der Vorlesung 
 
 Das System ist als verteiltes System mit mehreren Microservices aufgebaut, die jeweils eine spezifische Geschäftsfunktion abbilden. Die Kommunikation vom Browser zu den Services wird durch einen Kubernetes Ingress gesteuert.
 
-*Hier könnte ein Diagramm stehen, das die Service-Interaktionen zeigt.*
+```mermaid
+graph TD;
+    subgraph "Extern"
+        User["fa:fa-user User (Browser)"]
+    end
+
+    subgraph "Kubernetes Cluster"
+        direction LR
+        Ingress["fa:fa-route API Gateway / Ingress"]
+
+        subgraph "Anwendungs-Services"
+            direction TB
+            Frontend["fa:fa-window-maximize frontend-app (Angular)"]
+            Core["fa:fa-cogs core-service (NestJS)"]
+            Realtime["fa:fa-bolt realtime-service (NestJS)"]
+            Analytics["fa:fa-chart-bar analytics-collector (NestJS)"]
+        end
+
+        subgraph "Daten-Services"
+            direction TB
+            DB["fa:fa-database MongoDB"]
+        end
+    end
+
+    User -- "1: HTTP/S Request" --> Ingress;
+    Ingress -- "2: Statische UI" --> Frontend;
+    Ingress -- "3: REST API (/api)" --> Core;
+    Ingress -- "5: Tracking (/track)" --> Analytics;
+    
+    Core -- "4: CRUD-Operationen" --> DB;
+    Core -- "7: Event-Benachrichtigung" --> Realtime;
+
+    User -.-> |"6: WebSocket Verbindung"| Realtime;
+    Realtime -.-> |"8: Echtzeit-Updates"| User;
+
+    classDef userStyle fill:#cce5ff,stroke:#004085,stroke-width:2px,color:#333;
+    classDef gatewayStyle fill:#fff2cc,stroke:#856404,stroke-width:2px,color:#333;
+    classDef appStyle fill:#e5ccff,stroke:#563d7c,stroke-width:2px,color:#333;
+    classDef dbStyle fill:#d4edda,stroke:#155724,stroke-width:2px,color:#333;
+
+    class User userStyle;
+    class Ingress gatewayStyle;
+    class Frontend,Core,Realtime,Analytics appStyle;
+    class DB dbStyle;
+
+    linkStyle 6,7 stroke:#ff6d00,stroke-dasharray: 5 5,stroke-width:2px;
+```
 
 1.  **Frontend (Angular)**: Die Benutzeroberfläche, die mit den Backend-Services über den Kubernetes Ingress interagiert.
 2.  **Core-Service (NestJS)**: Der zentrale Service, der die Hauptgeschäftslogik enthält. Er verwaltet Benutzer, Events und stellt eine REST-API für CRUD-Operationen bereit. Er kommuniziert intern mit dem `realtime-service`.
