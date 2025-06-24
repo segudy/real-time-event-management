@@ -1,8 +1,45 @@
 <div class="list-container">
-  <h2>Kommende Events</h2> 
-  <div class="admin-controls">
-    <a *ngIf="authService.getUserRole() === 'organizer' || authService.getUserRole() === 'admin'" class="create-event-link" routerLink="/events/new">Neues Event erstellen</a>
-    <button *ngIf="authService.getUserRole() === 'admin'" class="delete-all-button" (click)="onDeleteAll()">Alle Events löschen</button>
+  <!-- Header with title and action buttons -->
+  <div class="list-header">
+    <h2>Kommende Events</h2>
+    
+    <!-- Action buttons -->
+    <div class="header-actions">
+      <!-- Create Event Button -->
+      <a *ngIf="authService.getUserRole() === 'organizer' || authService.getUserRole() === 'admin'" 
+         class="create-event-btn" 
+         routerLink="/events/new">
+        <span class="btn-icon">+</span>
+        Neues Event erstellen
+      </a>
+      
+      <!-- Admin Dropdown Menu -->
+      <div *ngIf="authService.getUserRole() === 'admin'" 
+           class="admin-dropdown" 
+           [class.dropdown-open]="dropdownOpen">        <button class="dropdown-toggle" 
+                (click)="toggleDropdown($event)"
+                [attr.aria-expanded]="dropdownOpen">
+          <span class="dropdown-icon">⚙</span>
+          Admin
+          <span class="dropdown-arrow" [class.rotated]="dropdownOpen">▼</span>
+        </button>        <div class="dropdown-menu" *ngIf="dropdownOpen">
+          <button class="dropdown-item" 
+                  (click)="onCreateRandomEvents()">
+            <span class="item-icon">🎲</span>
+            25 Demo Events erstellen
+          </button>
+          
+          <button class="dropdown-item danger" 
+                  [class.confirm-pending]="deleteConfirmationPending"
+                  (click)="onDeleteAll()">
+            <span class="item-icon">🗑</span>
+            <span *ngIf="!deleteConfirmationPending">Alle Events löschen</span>
+            <span *ngIf="deleteConfirmationPending">Bestätigen: Löschen</span>
+          </button>
+          <!-- Add more admin actions here in the future -->
+        </div>
+      </div>
+    </div>
   </div>
 
   <ul class="event-list" *ngIf="events$ | async as events; else loading">
@@ -18,6 +55,9 @@
   </ul>
 
   <ng-template #loading>
-    <p>Lade Events...</p>
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Lade Events...</p>
+    </div>
   </ng-template>
 </div>

@@ -4,11 +4,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EventsController } from './events.controller';
 import { EventsService } from './events.service';
 import { Event, EventSchema } from './schemas/event.schema';
+import { User, UserSchema } from '../auth/schemas/user.schema';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Event.name, schema: EventSchema }]),
+    MongooseModule.forFeature([
+      { name: Event.name, schema: EventSchema },
+      { name: User.name, schema: UserSchema }
+    ]),
     HttpModule,
   ],
   controllers: [EventsController],

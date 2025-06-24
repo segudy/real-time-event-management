@@ -38,4 +38,9 @@ export class EventService {
   deleteAllEvents(): Observable<{ deletedCount: number }> {
     return this.http.delete<{ deletedCount: number }>(this.apiUrl);
   }
+
+  // Admin-only: Methode zum Erstellen von 25 zufälligen Events
+  createRandomEvents(): Observable<{ createdCount: number }> {
+    return this.http.post<{ createdCount: number }>(`${this.apiUrl}/bulk/random`, {});
+  }
 }
