@@ -1,0 +1,39 @@
+/* frontend/src/app/register/register.scss */
+@import '../../styles.scss';
+
+.role-selector {
+  display: flex;
+  margin-bottom: 2.5rem;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden;
+
+  button {
+    flex-grow: 1; // Beide Buttons nehmen gleich viel Platz ein
+    padding: 1rem;
+    background-color: transparent;
+    color: $text-color;
+    border: none;
+    border-radius: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    // Trennlinie zwischen den Buttons
+    &:first-child {
+      border-right: 1px solid $border-color;
+    }
+
+    // Aktiver Zustand
+    &.active {
+      background-color: $primary-color;
+      color: black;
+    }
+
+    // Hover-Effekt für den inaktiven Button
+    &:not(.active):hover {
+      background-color: $surface-color;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 // frontend/src/app/register/register.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -7,7 +7,11 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+
+// Definiert die Rollen-Typen für Typsicherheit
+type UserRole = 'attendee' | 'organizer';
 
 @Component({
   selector: 'app-register',
@@ -16,39 +20,73 @@ import { AuthService } from '../auth.service';
   templateUrl: './register.html',
   styleUrls: ['./register.scss'],
 })
-export class RegisterComponent {
-  registerForm: FormGroup;
+export class RegisterComponent implements OnInit {
+  registerForm!: FormGroup;
+  selectedRole: UserRole = 'attendee'; // Standardmäßig ist "Privatperson" ausgewählt
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    // Initialisiert das Basis-Formular mit den gemeinsamen Feldern
     this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
+    // Fügt die Felder für die anfänglich ausgewählte Rolle hinzu
+    this.updateFormForRole(this.selectedRole);
+  }
+
+  // Methode zum Wechseln der Rolle, wird von den Tabs im HTML aufgerufen
+  selectRole(role: UserRole): void {
+    this.selectedRole = role;
+    this.updateFormForRole(role);
+  }
+
+  // Private Helfer-Methode, um das Formular dynamisch anzupassen
+  private updateFormForRole(role: UserRole): void {
+    // Zuerst alle optionalen Felder entfernen, um sauber zu starten
+    ['firstName', 'lastName', 'companyName', 'contactPerson', 'vatId', 'legalForm'].forEach(controlName => {
+      this.registerForm.removeControl(controlName);
+    });
+
+    if (role === 'attendee') {
+      // Felder für Privatperson hinzufügen und als Pflichtfelder markieren
+      this.registerForm.addControl('firstName', this.fb.control('', Validators.required));
+      this.registerForm.addControl('lastName', this.fb.control('', Validators.required));
+    } else if (role === 'organizer') {
+      // Felder für Unternehmen hinzufügen und als Pflichtfelder markieren
+      this.registerForm.addControl('companyName', this.fb.control('', Validators.required));
+      this.registerForm.addControl('contactPerson', this.fb.control('', Validators.required));
+      this.registerForm.addControl('vatId', this.fb.control('', Validators.required));
+      this.registerForm.addControl('legalForm', this.fb.control('')); // Optional
+    }
   }
 
   // Submit-Methode
   onSubmit() {
     if (this.registerForm.valid) {
-      console.log(
-        'Sende Registrierungsdaten an Backend:',
-        this.registerForm.value,
-      );
-      
-      // AuthService wird jetzt aufgerufen
-      this.authService.register(this.registerForm.value).subscribe({
+      // Fügt die ausgewählte Rolle zu den Formulardaten hinzu
+      const finalData = {
+        ...this.registerForm.value,
+        role: this.selectedRole,
+      };
+
+      console.log('Sende Registrierungsdaten an Backend:', finalData);
+      this.authService.register(finalData).subscribe({
         next: (response) => {
           console.log('Antwort vom Backend:', response);
-          alert('Registrierung erfolgreich! (Siehe Konsole für Details)');
+          alert('Registrierung erfolgreich! Bitte loggen Sie sich nun ein.');
+          this.router.navigate(['/login']); // Leitet zur Login-Seite weiter
         },
         error: (err) => {
           console.error('Fehler bei der Registrierung:', err);
-          alert('Registrierung fehlgeschlagen! (Siehe Konsole für Details)');
+          alert('Registrierung fehlgeschlagen! (Siehe Konsole)');
         },
       });
-    } else {
-      console.log('Registrierungsformular ist ungültig.');
     }
   }
 }
