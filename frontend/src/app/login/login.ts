@@ -7,6 +7,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { Router } from '@angular/router'; // Router importieren
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -19,31 +20,32 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  // Router injizieren
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
 
-  // Submit-Methode
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Sende Formulardaten an Backend:', this.loginForm.value);
-      
-      // AuthService wird jetzt aufgerufen
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           console.log('Antwort vom Backend:', response);
-          alert('Login erfolgreich! (Siehe Konsole für Details)');
+          alert('Login erfolgreich!');
+          // Bei Erfolg zur Event-Liste navigieren
+          this.router.navigate(['/events']);
         },
         error: (err) => {
           console.error('Fehler beim Login:', err);
           alert('Login fehlgeschlagen! (Siehe Konsole für Details)');
         },
       });
-    } else {
-      console.log('Formular ist ungültig');
     }
   }
 }

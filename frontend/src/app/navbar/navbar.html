@@ -5,11 +5,17 @@
 
   <div class="nav-links">
     <a routerLink="/events" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">Event-Liste</a>
-    <a routerLink="/events/new" routerLinkActive="active-link">Neues Event</a>
+    <a *ngIf="authService.getUserRole() === 'organizer'" routerLink="/events/new" routerLinkActive="active-link">Neues Event</a>
   </div>
 
   <div class="nav-auth">
-    <a routerLink="/login" routerLinkActive="active-link">Login</a>
-    <a routerLink="/register" routerLinkActive="active-link">Registrieren</a>
+    <ng-container *ngIf="isLoggedIn$ | async; else loggedOut">
+      <button (click)="logout()">Logout</button>
+    </ng-container>
+    
+    <ng-template #loggedOut>
+      <a routerLink="/login" routerLinkActive="active-link">Login</a>
+      <a routerLink="/register" routerLinkActive="active-link">Registrieren</a>
+    </ng-template>
   </div>
 </nav>
