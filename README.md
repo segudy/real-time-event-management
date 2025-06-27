@@ -133,7 +133,7 @@ Dies ist der empfohlene Weg, um die Anwendung lokal schnell zu starten und zu te
     Der `-d` Parameter startet die Container im Hintergrund.
 
 4.  **Zugriff auf die Anwendung:**
-    Die Anwendung ist jetzt unter **[http://localhost:4200](http://localhost:4200)** im Browser erreichbar.
+    Die Anwendung ist jetzt unter **[http://localhost](http://localhost)** im Browser erreichbar. Der Nginx-Gateway leitet alle Anfragen korrekt weiter.
 
 5.  **Anwendung stoppen und aufräumen:**
     ```bash
