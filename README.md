@@ -2,7 +2,7 @@
 
 Dieses Projekt ist eine Event-Management-Plattform, die im Rahmen der Vorlesung "Fortgeschrittene Informatik" als verteiltes System mit einer Microservice-Architektur entwickelt wurde. Sie ermöglicht es Benutzern, Events zu erstellen, zu verwalten und Echtzeit-Benachrichtigungen zu erhalten.
 
-**Link zum Repository:** `[Bitte hier den Link zum öffentlichen GitHub-Repository einfügen]`
+**Link zum Repository:** `[Real-Time Event Management Plattform](https://github.com/segudy/real-time-event-management)`
 
 ---
 
